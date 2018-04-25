@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Calendar</title>
+</head>
+<body>
+<a href="@{Application.index}"><h6 class="mx-5 my-5">Back to Calendar</h6></a>
+<div class="row  justify-content-center my-5">
+    <form class="w-25" action="@{Application.saveNotification}" method="post">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Title</label>
+            <input name="title" class="form-control" type="text" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Title">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Description</label>
+            <input  name="description" class="form-control"  type="text" id="exampleInputPassword1" placeholder="Description">
+        </div>
+
+        <div class="form-group row">
+            <label for="example-datetime-local-input" class="col-2 col-form-label">Date</label>
+            <div class="col-10">
+                <input class="form-control"  name="dateTime"step="1" value="${currentTime}" type="datetime-local" id="example-datetime-local-input">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Create notification</button>
+    </form>
+</div>
+
+*{<form action="@{Application.saveNotification}" method="post">}*
+    *{<input name="dateTime"step="1" value="${currentTime}" type="datetime-local">show}*
+    *{<input name="title" type="text">Title}*
+    *{<input name="description" type="text">Description}*
+    *{<input type="submit">}*
+    *{value="${year}-${month}-${day}T${hour}:${minute}"}*
+*{</form>}*
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
+

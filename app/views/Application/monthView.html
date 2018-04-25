@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Calendar</title>
+    <style>
+        .standardContainer {
+            width: 120px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <h1><a href="@{Application.monthView(year,month-1)}"> <span class="badge badge-secondary mx-2"
+                                                                    style="font-size:10pt;"><</span></a>${monthName}<a
+                href="@{Application.monthView(year,month+1)}"><span class="badge badge-secondary mx-2"
+                                                                    style="font-size:10pt;">></span></a> <a
+                href="@{Application.monthView(year-1,month)}"> <span class="badge badge-secondary mx-2"
+                                                                     style="font-size:10pt;"><</span></a>${year}<a
+                href="@{Application.monthView(year+1,month)}"><span class="badge badge-secondary mx-2"
+                                                                    style="font-size:10pt;">></span></a></h1>
+    </div>
+
+    <div class="row justify-content-center">
+
+    #{list items:weekDayNames,as:'weekDayName'}
+        <div class="card mx-2 my-3 text-center standardContainer">
+
+            <h6>${weekDayName}</h6>
+
+        </div>
+    #{/list}
+    </div>
+
+
+
+#{list items:0..weeksAmount,as:'weekNum'}
+    <div class="row justify-content-center">
+
+
+        #{list items:weekDayNames,as:'weekDayName'}
+
+            #{if weeks.get(weekNum).get(weekDayName)!=null}
+                <div class="card #{if weeks.get(weekNum).get(weekDayName).today}bg-success#{/if}#{else }bg-light#{/else} mb-3 mx-2 standardContainer text-center">
+                    <div class="card-header"><h4><span
+                            class="badge badge-secondary mx-1">${weeks.get(weekNum).get(weekDayName).getDayNum()}</span>
+                        <a class="btn btn-success btn-sm" href="@{Application.notificationForm}" role="button">+</a>
+                    </h4></div>
+                    <div class="card-body">
+                        #{if weeks.get(weekNum).get(weekDayName).getNotifications().size()>0}
+                            #{list items:weeks.get(weekNum).get(weekDayName).getNotifications(),as:'notification'}
+                                <div class="row justify-content-center">
+                               <a href="@{Application.removeNotification(notification.id)}"><span class="badge badge-danger mx-2 my-3">X</span></a>
+                                    <button type="button" class="btn #{if notification.expired==false}btn-primary #{/if}#{else }btn-secondary#{/else}text-center my-1"
+                                            style=" font-size: 10px;max-width: 50px;" data-toggle="modal"
+                                            data-target="#myModal2" data-title="${notification.title}"
+                                            data-description="${notification.description}"
+                                            data-time="${notification.timeStr}"
+                                            date-notification-id="${notification.id}">
+                                    ${notification.title}
+                                    </button>
+
+                                </div>
+
+
+                            #{/list}
+
+
+                        #{/if}
+                    </div>
+                </div>
+            #{/if}
+            #{else }
+                <div class="card border-secondary mb-3 mx-2 standardContainer">
+                    <div class="card-header"></div>
+                    <div class="card-body text-secondary">
+                    </div>
+                </div>
+            #{/else}
+        #{/list}
+
+    </div>
+#{/list}
+
+</div>
+
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Modal body..
+            </div>
+
+            <!-- Modal footer -->
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><span id="modal-title"></span></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span id="modal-description"></span> <span id="modal-bb"></span>
+                <h4 id="modal-time"></h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+<script>
+
+    var ATTRIBUTES = ['title', 'description', 'time', 'notification-id'];
+
+    $('[data-toggle="modal"]').on('click', function (e) {
+        // convert target (e.g. the button) to jquery object
+        var $target = $(e.target);
+        // modal targeted by the button
+        var modalSelector = $target.data('target');
+
+        // iterate over each possible data-* attribute
+        ATTRIBUTES.forEach(function (attributeName) {
+            // retrieve the dom element corresponding to current attribute
+            var $modalAttribute = $(modalSelector + ' #modal-' + attributeName);
+
+            var dataValue = $target.data(attributeName);
+
+            // if the attribute value is empty, $target.data() will return undefined.
+            // In JS boolean expressions return operands and are not coerced into
+            // booleans. That way is dataValue is undefined, the left part of the following
+            // Boolean expression evaluate to false and the empty string will be returned
+            $modalAttribute.text(dataValue || '');
+        });
+    });
+
+</script>
+
+
+</body>
+</html>
