@@ -18,7 +18,7 @@ public class Application extends Controller {
     private static void putIntoMap(HashMap<String, Day> week, Calendar instance, boolean today) {
         Day day = new Day();//some comment
         day.setDayNum(instance.get(Calendar.DAY_OF_MONTH));
-        day.setToday(today);
+        day.setToday(today);//salam
         day.setNotifications(
                 Notification.find("monthNum=:monthNum and monthDay=:monthDay and yearNum=:yearNum")
                         .setParameter("monthNum", instance.get(Calendar.MONTH) + 1)
